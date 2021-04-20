@@ -97,17 +97,18 @@ def respond(sock):
 
     # My code below
         # Split the url by /, checking the last part of the url see if it contains the file
-        if parts[1].split("/")[-1] == "trivia.html" or parts[1].split("/")[-1] == "trivia.css":
-            # Then checking if the file exist, if exist, then read its contant
-            if path.exists("./pages/trivia.html")
-                f = open("./pages/trivia.html", "r")
-                print(f.read())
-            # if not exist, then throw 404 not found
-            else:
-                log.info(STATUS_NOT_FOUND)
-                transmit(STATUS_NOT_FOUND, sock)
+        if parts[1].contains(".html") or parts[1].contains(".css"):
+            if parts[1].split("/")[-1] == "trivia.html" or parts[1].split("/")[-1] == "trivia.css":
+                # Then checking if the file exist, if exist, then read its contant
+                if path.exists("./pages/trivia.html"):
+                    f = open("./pages/trivia.html", "r")
+                    print(f.read())
+                # if not exist, then throw 404 not found
+                else:
+                    log.info(STATUS_NOT_FOUND)
+                    transmit(STATUS_NOT_FOUND, sock)
         # Split the url by /, if the user typed double slash //, it will have 3 sub strings, we want to see if the middle one is empty. Then throw 403
-        if parts[1].split("/")[-2] == "":
+        if parts[1].contains("//"):
             log.info(STATUS_FORBIDDEN)
             transmit(STATUS_FORBIDDEN, sock)
             
